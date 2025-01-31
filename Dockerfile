@@ -23,8 +23,11 @@ RUN apt-get update && apt-get install -y \
 # Set Work Directory
 WORKDIR /app
 
-# Copy Application Files (Assuming you have the app locally)
+# Copy Application Files (Modify if needed)
 COPY . /app
+
+# Ensure Required Directories Exist
+RUN mkdir -p /app/packages/twenty-server/.local-storage /app/docker-data
 
 # Set Volume Paths
 VOLUME /app/packages/twenty-server/.local-storage
