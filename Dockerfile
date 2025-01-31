@@ -18,7 +18,13 @@ RUN apt-get update && apt-get install -y \
     curl \
     bash \
     ca-certificates \
+    gnupg \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Node.js and Yarn
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g yarn
 
 # Set Work Directory
 WORKDIR /app
@@ -38,8 +44,11 @@ VOLUME /home/postgres/pgdata
 RUN chown -R 1000:1000 /app/packages/twenty-server/.local-storage \
     && chown -R 1000:1000 /app/docker-data
 
+# Install Project Dependencies
+RUN yarn install --frozen-lockfile
+
 # Expose Ports
 EXPOSE 3000
 
 # Set Default Command
-CMD ["bash", "-c", "yarn && yarn start:prod"]
+CMD ["yarn", "start:prod"]
