@@ -51,4 +51,4 @@ RUN yarn install --frozen-lockfile
 EXPOSE 3000
 
 # Set Default Command
-CMD ["yarn", "start:prod"]
+CMD ["yarn", "start"]
